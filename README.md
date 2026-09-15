@@ -1,9 +1,8 @@
-# jcha_skills
+# Skills for Political Science Research
 
 Agent skills I use for research work — mostly conventions I'd otherwise have to
 re-explain at the start of every session. Each skill is a `SKILL.md` file that
-tells Claude (or any agent that reads this format) how I want a particular kind
-of work done.
+tells agentic AI how I want a particular kind of work done.
 
 **Work in progress.** More skills will be added over time.
 
