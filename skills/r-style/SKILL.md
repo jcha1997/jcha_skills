@@ -183,6 +183,23 @@ wri_xtab <- function(tbl, name, dir = "guide/Tables/cands") {
 - Comment *why*, never *what*. `# Loeffler was appointed incumbent, Warnock is a challenger` earns its place; `# filter the data` does not.
 - Lowercase, short, above the block they describe.
 - No decorative comments, no banner blocks, no `# END` markers.
+- **Comments describe the code as it is. They do not refer to earlier versions of it.** No `# previously used a loop here`, no `# switched from name to id because names broke`, no `# fixed: old join dropped rows`. A reader sees only the current script; a comparison to a draft they never saw tells them nothing, and it goes stale as the draft is forgotten. If a comment is needed, give the positive reason the current code is right:
+
+```r
+# good — the reason stands on its own
+# district_id is stable across renames, so it is the join key
+jsdat <- jsdat |>
+  left_join(dist_xwalk, by = "district_id")
+
+# bad — only makes sense if you saw the old draft
+# switched from district name to id, names broke on 2018 renames
+jsdat <- jsdat |>
+  left_join(dist_xwalk, by = "district_id")
+```
+
+  Words that flag the wrong framing: `previously`, `old`, `used to`, `switched`, `replaced`, `fixed`, `no longer`, `instead of`. When one shows up, rewrite the comment to say what is true now and why. Where a change really needs a record, that record belongs in the commit message, not in the script.
+
+- Write comments in plain Simplified Technical English (ASD-STE100), applied loosely — about 75%: one idea per comment, short sentences, active voice, present tense, the same word for the same thing throughout. Domain terms (`fixed effects`, `crosswalk`, `tibble`) stay as they are; the approved-word list is a guide, not a gate.
 - Console output: single-line summaries. No multi-line `cat()` progress reports, no emoji, no "✓ Done!". If a step's effect needs to be visible, `tidylog::` already prints it.
 - Inline sanity checks are welcome and should stay in the script: a bare `xtabs(~ year + party, pres_sel)`, a `count()`, a `stopifnot()`.
 
